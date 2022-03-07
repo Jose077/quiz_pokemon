@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    Home
+    Pagina do quizz!
     <!-- <img
       alt="Quasar logo"
       src="~assets/poke_logo.svg"
@@ -13,6 +13,6 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "PageIndex",
+  name: "PageQuizz",
 });
 </script>
