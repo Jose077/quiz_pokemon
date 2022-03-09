@@ -1,17 +1,19 @@
-export function someAction(context) {
+import { api } from '../../boot/axios.ts'
 
-    async function getPokemons() {
-        return new Promise(resolve => {
-            $axios.get('/pokemon').then((res) => {
-                console.log(res.data);
-                data = res.data;
-
-                resolve(data)
-            }).catch((err) => {
-                reject(err)
+export async function getPokemons({ state }) {
+    return new Promise((resolve, reject) => {
+        api.request(
+            {
+                url: '/pokemon',
+                method: 'GET',
+                // headers: { 'Authorization': `Bearer ${rootState.token}` }
             })
-        })
-    }
-
+            .then((res) => {
+                resolve(res);
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    });
 }
 
