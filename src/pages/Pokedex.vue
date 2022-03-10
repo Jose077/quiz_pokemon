@@ -56,7 +56,7 @@ export default defineComponent({
   methods: {
     getPokemons() {
         this.$store.dispatch("pokemon/getPokemons")?.then((res) => {
-          this.data = res.data;
+          this.data = res.data ?? [];
         }).catch((err) => {
           console.log(err);
         })
@@ -64,7 +64,7 @@ export default defineComponent({
   },
 
   created() {
-    this.data = this.getPokemons();
+    this.getPokemons();
   },
 
 });
