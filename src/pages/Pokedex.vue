@@ -1,17 +1,35 @@
 <template>
   <q-page class="content--default">
-    <!-- Filtros -->
+
     <div style="width: 72vw; margin-top: 1.5rem">
+
       <!-- lista de pokedex -->
       <div class="row q-mt-md">
+
+      <!-- Lista infinita -->
+      <q-infinite-scroll @load="onLoad" :offset="250" class="row" >
         <div
           class="col-12 col-lg-3 col-md-3 col-sm-6 q-pa-md"
-          v-for="item in data?.results"
-          :Key="item"
+          v-for="(pokemon, index) in pokemonList"
+          :key="index"
         >
-          <CardPokemon :title="item?.name" :link="item?.url" />
+            <div>
+                <CardPokemon :title="pokemon?.name" :link="pokemon?.url" />
+            </div>
         </div>
+
+
+        <template v-slot:loading>
+          <div style="width: 72vw; display: flex; justify-content: center;" >
+            <q-spacer/>
+            <q-spinner-dots style="color: #0A2C59" size="70px" />
+
+          </div>
+        </template>
+
+      </q-infinite-scroll>
       </div>
+
     </div>
   </q-page>
 </template>
@@ -32,36 +50,65 @@ export default defineComponent({
   },
 
   setup() {
+
     const $store = useStore();
-    let data = ref(null);
+    const pokemonList = ref([])
 
     return {
       $store,
-      data,
+      pokemonList,
     };
   },
 
   methods: {
-    getPokemons() {
-      this.$store.dispatch("pokemon/getPokemons")
-        ?.then((res) => {
-          this.data = res.data ?? [];
-        })
-        .catch((err) => {
+
+    getPokemons(props) {
+      const params = {
+        limit: props.limit,
+        offset: props.offset
+      }
+
+      return this.$store.dispatch("pokemon/getPokemons", params)?.then((res) => {
+          return res.data ?? [];
+      })
+      .catch((err) => {
           console.log(err);
-        });
+      });
     },
+
+    async onLoad (index, done) {
+      const limit = 8;
+      let offset = (limit * (index - 1));
+
+      const props = {
+        limit,
+        offset
+      }
+
+      const pokemons = await this.getPokemons(props);
+
+      console.log(index)
+
+      setTimeout(() => {
+        this.pokemonList.push(...pokemons?.results)
+
+        done()
+      }, 2000)
+    }
+
+
   },
 
   created() {
-    this.getPokemons();
+    // this.getPokemons();
+    // this.onLoad()
   },
 });
 </script>
 
 <style lang="scss">
-.content--default {
-  display: flex;
-  justify-content: center;
-}
+  .content--default {
+    display: flex;
+    justify-content: center;
+  }
 </style>
