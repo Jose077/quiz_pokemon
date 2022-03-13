@@ -13,23 +13,7 @@ export default store(function (/* { ssrContext } */) {
     },
 
     actions: {
-      // async getPokemons({ state }) {
 
-      //   return await new Promise((resolve, reject) => {
-      //     api.request(
-      //       {
-      //         url: '/pokemon',
-      //         method: 'GET',
-      //         // headers: { 'Authorization': `Bearer ${rootState.token}` }
-      //       })
-      //       .then((res) => {
-      //         resolve(res);
-      //       })
-      //       .catch((err) => {
-      //         reject(err);
-      //       });
-      //   });
-      // },
     },
 
     modules: {

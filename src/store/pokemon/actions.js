@@ -1,11 +1,17 @@
 import { api } from '../../boot/axios.ts'
 
 export async function getPokemons({ state }) {
+    let limit = 8;
+    let offset = 0;
     return new Promise((resolve, reject) => {
         api.request(
             {
-                url: '/pokemon',
+                url: `/pokemon`,
                 method: 'GET',
+                params: {
+                  limit,
+                  offset
+                }
                 // headers: { 'Authorization': `Bearer ${rootState.token}` }
             })
             .then((res) => {
@@ -18,6 +24,7 @@ export async function getPokemons({ state }) {
 }
 
 export async function getPokemonByName({ state }, name) {
+
     return new Promise((resolve, reject) => {
         api.request(
             {
@@ -33,5 +40,6 @@ export async function getPokemonByName({ state }, name) {
             });
     });
 }
+
 
 
