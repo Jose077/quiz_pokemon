@@ -39,39 +39,52 @@
   </q-card>
 
   <!-- Modal pokemon info -->
-  <q-dialog v-model="modalControl">
-    <q-card style="width: 100%; border-radius:  1.4rem" >
+  <q-dialog v-model="modalControl" style="background-color: rgba(0,0,0,0.8);" >
+    <q-card rouded style="width: 900px; max-width: 80vw; border-radius: 1.5rem" >
 
-          <!-- Tipos/imagem -->
-          <div
-            :style="`
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background: linear-gradient(to right, white 0%, ${colorsTypes[pokemonData?.types[0].type?.name]} 100%)
-            `"
-          >
-              <!-- types -->
-              <div style="display: flex; flex-direction: column; padding: 1.5rem">
-                <q-chip
-                      v-for="type in pokemonData?.types"
-                      :key="type.url"
-                      :style="`
-                        border-radius: 100px;
-                        background: ${colorsTypes[type?.type?.name]}
-                      `"
-                    >
-                  <span style="font-weight: bold; color: white"> {{ type?.type?.name }} </span>
-                </q-chip>
-              </div>
 
-              <q-space />
+      <!-- Tipos/imagem -->
 
-              <q-img
-                :alt="title"
-                :src="pokemonData?.sprites?.front_default"
-                style="max-width: 12rem"
-              />
+      <div
+        :style="`
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to right, white 0%, ${colorsTypes[pokemonData?.types[0].type?.name]} 100%)
+        `"
+      >
+
+          <!-- types -->
+
+          <q-btn 
+            flat 
+            round 
+            icon="mdi-close"
+            style="position: absolute; top: 0.5rem; right: 0.5rem; cursor: pointer; z-index: 99"
+            @click="modalControl = false"
+
+          />
+
+          <div style="display: flex; flex-direction: column; padding: 1.5rem">
+            <q-chip
+                  v-for="type in pokemonData?.types"
+                  :key="type.url"
+                  :style="`
+                    border-radius: 100px;
+                    background: ${colorsTypes[type?.type?.name]}
+                  `"
+                >
+              <span style="font-weight: bold; color: white"> {{ type?.type?.name }} </span>
+            </q-chip>
+          </div>
+
+          <q-space />
+
+          <q-img
+            :alt="title"
+            :src="pokemonData?.sprites?.front_default"
+            style="max-width: 12rem"
+          />
 
       </div>
 
@@ -89,25 +102,38 @@
 
         </div>
 
-        <br>
+        <hr class="q-my-md" style="height: 0.09rem; background: gray">
 
         <!-- posps -->
-        <div style="display: flex; gap: 0.5rem; align-items: center">
-           <span>Hp</span>  <q-linear-progress rounded size="8px" :value="0.45" /> <span>45</span>
+        <div
+          v-for="stat in pokemonData.stats" :key="stat"
+          style="
+            display: flex; 
+            gap: 0.5rem; 
+            align-items: center; 
+            width: 100%;
+            padding: 0.3rem
+          "
+          class="row"
+        >
+            <div class="col-12 col-md-1">
+                <span>{{ returnNameStat(stat.stat.name)}} </span> 
+            </div>
+
+            <div class="col-12 col-md-9">
+                <q-linear-progress
+                  :style="`color: ${colorsTypes[pokemonData?.types[0].type?.name]}`"
+                  rounded size="8px" 
+                  :value="(stat.base_stat / 100)"
+                /> 
+            </div>
+
+            <div class="col-12 col-md-1">
+                <span>{{stat.base_stat}}</span>
+            </div>
         </div>
 
       </q-card-section>
-
-      <!-- <hr> -->
-
-<!--
-      <q-card-section class="q-pt-none">
-        <span class="text-subtitle1"> Italian:  </span>
-
-        <span class="text-grey">
-          lorem ipsum
-        </span>
-      </q-card-section> -->
 
     </q-card>
   </q-dialog>
@@ -142,7 +168,7 @@ export default defineComponent({
           poison: '#A33EA1',
           ground: '#E2BF65',
           flying: '#A98FF3',
-          psychic: '#Fyhh95587',
+          psychic: '#F95587',
           bug: '#A6B91A',
           rock: '#B6A136',
           ghost: '#735797',
@@ -168,6 +194,7 @@ export default defineComponent({
   },
 
   methods: {
+
     getPokemonByName(name) {
       this.$store
         .dispatch("pokemon/getPokemonByName", name)
@@ -178,6 +205,22 @@ export default defineComponent({
           console.log(err);
         });
     },
+
+    returnNameStat(name) {
+
+      // se o nome for composto
+      if(name.includes("-")) {
+        let names = name.split("-");
+
+        let shortName = names.map((name) => {
+          return name.substr(0,2)
+        })
+
+        return shortName.join("-")
+      }
+
+      return name;
+    }
   },
 
   created() {
