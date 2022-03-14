@@ -41,10 +41,7 @@
   <!-- Modal pokemon info -->
   <q-dialog v-model="modalControl" style="background-color: rgba(0,0,0,0.8);" >
     <q-card rouded style="width: 900px; max-width: 80vw; border-radius: 1.5rem" >
-
-
       <!-- Tipos/imagem -->
-
       <div
         :style="`
             display: flex;
@@ -55,7 +52,6 @@
       >
 
           <!-- types -->
-
           <q-btn 
             flat 
             round 

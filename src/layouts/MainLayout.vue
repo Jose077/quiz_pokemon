@@ -1,19 +1,18 @@
 <template>
   <q-layout view="lHh Lpr lFf">
+
     <q-header elevated>
       <!-- nav bar -->
-      <q-toolbar class="bg-warning">
-        <!-- <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        /> -->
+      <q-toolbar class="color_nav_bar">
 
+        <!-- btn toolbar -->
+        <q-btn class="isVisible-Drawer" flat @click="drawerLeft = !drawerLeft" round dense icon="menu" />
+        
+        <q-space />
+
+        <!-- logo site -->
         <q-toolbar-title
-          class="q-ml-xl"
+          class="q-ml-xl "
           style="display: flex; align-items: center; margin-left: 6rem"
         >
           <div @click="$router.push('/')" style="cursor: pointer">
@@ -31,7 +30,7 @@
           </div>
         </q-toolbar-title>
 
-        <q-tabs v-model="tab" class="text-black" inline-label>
+        <q-tabs v-model="tab"  inline-label class="tabs_visible">
           <q-route-tab
             exact
             to="/pokedex"
@@ -51,97 +50,114 @@
 
         <q-space />
 
-        <!-- informacoes de usuario -->
-        <q-chip outline color="black">
-          <q-avatar size="33px">
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-          </q-avatar>
-          John Doe
-        </q-chip>
+        <div class="tabs_visible">
+            <!-- informacoes de usuario -->
+            <q-chip outline class=" text-white" style="height: 2rem">
+              <q-avatar size="40px" style="border: 1px solid white">
+                <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+              </q-avatar>
+              
+              <b> John Doe </b>
+            </q-chip>
 
-        <q-btn
-          rounded
-          outline
-          icon-right="mdi-exit-to-app"
-          class="q-mr-xl q-ml-xs"
-          color="black"
-          size="sm"
-        >
-          sair
-        </q-btn>
+            <q-btn
+              rounded
+              outline
+              icon-right="mdi-exit-to-app"
+              class="q-mr-xl q-ml-xs"
+            >
+              <b> sair </b>
+            </q-btn>
+        </div>
+
       </q-toolbar>
     </q-header>
 
     <!-- drawer -->
-    <!-- <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-        <h4>Vai ter algum menu aqui!</h4>
+    <q-drawer
+      v-model="drawerLeft"
+      :width="200"
+      :breakpoint="800"
+      elevated
+      no-swipe-close
+      style="background:  #E5E5E5"
+      class="text-white isVisible-Drawer"
+    >
 
-       // <EssentialLink
-         // v-for="link in essentialLinks"
-         // :key="link.title"
-          //v-bind="link"
-       //  />
-      </q-list>
-    </q-drawer> -->
+      <div class="q-pa-sm text-black" >
+            <q-list style="margin-top: 145px">
+              <template v-for="(menuItem, index) in menuList" :key="index">
+                <q-item 
+                  clickable 
+                  :active="`/${menuItem.router}` === $route.path"
+                  v-ripple 
+                  @click="$router.push(menuItem.router)"
+                >
+                  <q-item-section >
+                    <q-icon size="1.8rem" :name="menuItem.icon" />
+                  </q-item-section>
 
+                  <q-item-section>
+                    <b style="font-size: 1rem; padding-right: 0px; margin-right: 0px"  > {{ menuItem.label }} </b>
+                  </q-item-section>
+                </q-item>
+
+                <q-separator :key="'sep' + index"  v-if="menuItem.separator" />
+
+              </template>
+            </q-list>
+
+            <q-img class="absolute-top" src="https://lh3.googleusercontent.com/tlIBC-OoNcTiL7SXVcrCIG91xE_XVFzYyRKLouFq5NV7LYOznYyXI7ualBMV15H9L1eGWVGz5Co1GXqqgJYDZ-5sDY7QzPPeTID975gJ3PIpNMc=e365-w1259" style="height: 150px">
+                <div class="absolute-bottom bg-transparent">
+                  <q-avatar size="56px" class="q-mb-sm">
+                    <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                  </q-avatar>
+                  <div class="text-weight-bold">John Doe</div>
+                  <div>@jhonDoe</div>
+                </div>
+            </q-img>
+      </div>
+
+    </q-drawer>
+
+    <!-- Renderização da pagina -->
     <q-page-container>
       <router-view />
     </q-page-container>
+
   </q-layout>
 </template>
 
 <script>
-// import EssentialLink from "components/EssentialLink.vue";
-
-const linksList = [
-  {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
-  },
-  {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework",
-  },
-  {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
-    icon: "chat",
-    link: "https://chat.quasar.dev",
-  },
-  {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
-  },
-  {
-    title: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-    link: "https://twitter.quasar.dev",
-  },
-  {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev",
-  },
-];
 
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
+
+const menuList = [
+  {
+    icon: 'mdi-pokeball',
+    label: 'Pokédex',
+    separator: true,
+    router: 'pokedex'
+  },
+  {
+    icon: 'mdi-comment-question-outline',
+    label: 'Quizz',
+    separator: true,
+    router: 'quizz'
+
+  },
+
+  {
+    icon: 'mdi-exit-to-app',
+    label: 'Sair',
+    separator: false,
+    router: '/'
+
+  }
+
+  
+]
 
 export default defineComponent({
   name: "MainLayout",
@@ -155,9 +171,9 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
 
     return {
-      // essentialLinks: linksList,
-
+      menuList,
       leftDrawerOpen,
+      drawerLeft: ref(false),
 
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -170,9 +186,29 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-body {
-  background: $bg_default;
+  body {
+    background: $bg_default;
 
-  font-family: "Poppins", sans-serif;
-}
+    font-family: "Poppins", sans-serif;
+  }
+
+  .color_nav_bar {
+    background: $blue_400;
+    height: 3.8rem;
+  }
+
+  .isVisible-Drawer{
+    display: none;
+  }
+
+  @media (max-width: 1200px) {
+    .isVisible-Drawer {
+        display: inherit;
+    }
+
+    .tabs_visible {
+      display: none;
+    }
+    
+  }
 </style>
