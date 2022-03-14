@@ -40,6 +40,7 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { defineAsyncComponent } from "vue";
 
+
 export default defineComponent({
   name: "PagePokedex",
 
@@ -89,11 +90,11 @@ export default defineComponent({
 
       console.log(index)
 
-      setTimeout(() => {
-        this.pokemonList.push(...pokemons?.results)
 
-        done()
-      }, 2000)
+      this.pokemonList.push(...pokemons?.results)
+
+      done()
+
     }
 
 

@@ -1,52 +1,116 @@
 <template>
-  <q-card class="bordered" style="border-radius: 2rem;">
+  <q-card class="bordered" style="border-radius: 1.4rem;">
+    <!-- Imagem pokemon-->
     <div
       :style="`
         display: flex;
         justify-content: center;
         background: radial-gradient(white 0%, ${colorsTypes[pokemonData?.types[0].type?.name]} 100%)`"
     >
-      <img style="width: 12rem" :src="pokemonData?.sprites?.front_default" />
+      <q-img style="width: 12rem" :src="pokemonData?.sprites?.front_default" :alt="title" />
     </div>
 
-    <!-- nome do pokemon -->
+    <!-- Nome do pokemon -->
     <q-list class="q-pb-md q-mt-sm">
       <span class="q-ml-md text-h5 q-pb-xs">
         {{ title || "Não encontrado!" }}
       </span>
-
-      <!-- <q-item clickable>
-        <q-item-section avatar>
-          <q-icon color="primary" name="local_bar" />
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label>Bar XYZ</q-item-label>
-          <q-item-label caption>Have a drink.</q-item-label>
-        </q-item-section>
-      </q-item> -->
     </q-list>
 
-    <!-- tipos -->
+    <!-- Tipos -->
     <q-chip
-       v-for="type in pokemonData?.types"
+      v-for="type in pokemonData?.types"
       :key="type.url"
       :style="`
         border-radius: 100px;
         margin-bottom: 1rem;
         background: ${colorsTypes[type?.type?.name]}
       `"
-
     >
       <span style="font-weight: bold; color: white"> {{ type?.type?.name }} </span>
     </q-chip>
 
-    <!-- info -->
-    <q-item class="q-px-md view_info_props" clickable>
+    <!-- Info -->
+    <q-item class="q-px-md view_info_props" clickable @click="modalControl = true">
       <span style="font-size: 0.9rem; font-weight: bold"> Ver informações</span>
       <q-icon name="mdi-pokeball" size="1.5rem" class="q-ml-xs" />
     </q-item>
+
   </q-card>
+
+  <!-- Modal pokemon info -->
+  <q-dialog v-model="modalControl">
+    <q-card style="width: 100%; border-radius:  1.4rem" >
+
+          <!-- Tipos/imagem -->
+          <div
+            :style="`
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: linear-gradient(to right, white 0%, ${colorsTypes[pokemonData?.types[0].type?.name]} 100%)
+            `"
+          >
+              <!-- types -->
+              <div style="display: flex; flex-direction: column; padding: 1.5rem">
+                <q-chip
+                      v-for="type in pokemonData?.types"
+                      :key="type.url"
+                      :style="`
+                        border-radius: 100px;
+                        background: ${colorsTypes[type?.type?.name]}
+                      `"
+                    >
+                  <span style="font-weight: bold; color: white"> {{ type?.type?.name }} </span>
+                </q-chip>
+              </div>
+
+              <q-space />
+
+              <q-img
+                :alt="title"
+                :src="pokemonData?.sprites?.front_default"
+                style="max-width: 12rem"
+              />
+
+      </div>
+
+      <q-card-section>
+        <!-- name/w/h -->
+        <div style="display: flex">
+            <span class="col text-h5"> {{title}} </span>
+
+            <q-space/>
+
+            <div class="q-mr-md">
+             <q-icon name="mdi-human-male-height" size="1.2rem" />  <span class="q-mr-md">: {{(pokemonData.height / 10)}}m </span>
+             <q-icon name="mdi-scale" size="1rem" /> <span>: {{(pokemonData.weight / 10)}}Kg </span>
+            </div>
+
+        </div>
+
+        <br>
+
+        <!-- posps -->
+        <div style="display: flex; gap: 0.5rem; align-items: center">
+           <span>Hp</span>  <q-linear-progress rounded size="8px" :value="0.45" /> <span>45</span>
+        </div>
+
+      </q-card-section>
+
+      <!-- <hr> -->
+
+<!--
+      <q-card-section class="q-pt-none">
+        <span class="text-subtitle1"> Italian:  </span>
+
+        <span class="text-grey">
+          lorem ipsum
+        </span>
+      </q-card-section> -->
+
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -66,6 +130,7 @@ export default defineComponent({
     return {
       pokemonData,
       $store,
+      modalControl: ref(false),
       colorsTypes: {
           normal: '#A8A77A',
           fire: '#EE8130',
@@ -85,7 +150,7 @@ export default defineComponent({
           dark: '#705746',
           steel: '#B7B7CE',
           fairy: '#D685AD',
-        }
+      }
     };
   },
 
