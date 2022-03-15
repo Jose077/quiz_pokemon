@@ -12,7 +12,7 @@
 
     <!-- Nome do pokemon -->
     <q-list class="q-pb-md q-mt-sm">
-      <span class="q-ml-md text-h5 q-pb-xs">
+      <span class="q-ml-md text-h5 q-pb-xs" >
         {{ title || "Não encontrado!" }}
       </span>
     </q-list>
@@ -52,9 +52,9 @@
       >
 
           <!-- types -->
-          <q-btn 
-            flat 
-            round 
+          <q-btn
+            flat
+            round
             icon="mdi-close"
             style="position: absolute; top: 0.5rem; right: 0.5rem; cursor: pointer; z-index: 99"
             @click="modalControl = false"
@@ -104,24 +104,24 @@
         <div
           v-for="stat in pokemonData.stats" :key="stat"
           style="
-            display: flex; 
-            gap: 0.5rem; 
-            align-items: center; 
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
             width: 100%;
             padding: 0.3rem
           "
           class="row"
         >
             <div class="col-12 col-md-1">
-                <span>{{ returnNameStat(stat.stat.name)}} </span> 
+                <span>{{ returnNameStat(stat.stat.name)}} </span>
             </div>
 
             <div class="col-12 col-md-9">
                 <q-linear-progress
                   :style="`color: ${colorsTypes[pokemonData?.types[0].type?.name]}`"
-                  rounded size="8px" 
+                  rounded size="8px"
                   :value="(stat.base_stat / 100)"
-                /> 
+                />
             </div>
 
             <div class="col-12 col-md-1">

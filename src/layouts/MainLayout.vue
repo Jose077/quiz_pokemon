@@ -3,34 +3,35 @@
 
     <q-header elevated>
       <!-- nav bar -->
-      <q-toolbar class="color_nav_bar">
+      <q-toolbar class="color_nav_bar" style="display: flex; justify-content: space-between">
 
         <!-- btn toolbar -->
-        <q-btn class="isVisible-Drawer" flat @click="drawerLeft = !drawerLeft" round dense icon="menu" />
-        
-        <q-space />
+        <q-btn class="hidden-on-desktop" flat @click="drawerLeft = !drawerLeft" round dense icon="menu" />
 
         <!-- logo site -->
-        <q-toolbar-title
-          class="q-ml-xl "
-          style="display: flex; align-items: center; margin-left: 6rem"
-        >
-          <div @click="$router.push('/')" style="cursor: pointer">
-            <img
-              alt="Quasar logo"
-              src="~assets/certo_errado.png"
-              style="height: 40px"
-            />
+        <div>
+          <q-toolbar-title
+            class="q-ml-xl "
+            style="display: flex; align-items: center; margin-left: 6rem"
+          >
+            <div @click="$router.push('/')" style="cursor: pointer">
+              <img
+                alt="Quasar logo"
+                src="~assets/certo_errado.png"
+                style="height: 40px"
+              />
 
-            <img
-              alt="Quasar logo"
-              src="~assets/poke_logo.svg"
-              style="height: 40px"
-            />
-          </div>
-        </q-toolbar-title>
+              <img
+                alt="Quasar logo"
+                src="~assets/poke_logo.svg"
+                style="height: 40px"
+              />
+            </div>
+          </q-toolbar-title>
+        </div>
 
-        <q-tabs v-model="tab"  inline-label class="tabs_visible">
+        <!-- menu tabs -->
+        <q-tabs v-model="tab"  inline-label class="hidden-on-mobile">
           <q-route-tab
             exact
             to="/pokedex"
@@ -48,15 +49,13 @@
           <!-- <q-tab name="movies" icon="movie" label="Movies" /> -->
         </q-tabs>
 
-        <q-space />
-
-        <div class="tabs_visible">
-            <!-- informacoes de usuario -->
+        <!-- informacoes de usuario -->
+        <div class="hidden-on-mobile">
             <q-chip outline class=" text-white" style="height: 2rem">
               <q-avatar size="40px" style="border: 1px solid white">
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
               </q-avatar>
-              
+
               <b> John Doe </b>
             </q-chip>
 
@@ -65,8 +64,9 @@
               outline
               icon-right="mdi-exit-to-app"
               class="q-mr-xl q-ml-xs"
+              style="padding: 0px 10px; "
             >
-              <b> sair </b>
+              logout
             </q-btn>
         </div>
 
@@ -77,20 +77,19 @@
     <q-drawer
       v-model="drawerLeft"
       :width="200"
-      :breakpoint="800"
       elevated
       no-swipe-close
       style="background:  #E5E5E5"
-      class="text-white isVisible-Drawer"
+      class="text-white hidden-on-desktop"
     >
 
       <div class="q-pa-sm text-black" >
             <q-list style="margin-top: 145px">
               <template v-for="(menuItem, index) in menuList" :key="index">
-                <q-item 
-                  clickable 
+                <q-item
+                  clickable
                   :active="`/${menuItem.router}` === $route.path"
-                  v-ripple 
+                  v-ripple
                   @click="$router.push(menuItem.router)"
                 >
                   <q-item-section >
@@ -156,7 +155,7 @@ const menuList = [
 
   }
 
-  
+
 ]
 
 export default defineComponent({
@@ -185,7 +184,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   body {
     background: $bg_default;
 
@@ -197,18 +196,26 @@ export default defineComponent({
     height: 3.8rem;
   }
 
-  .isVisible-Drawer{
+  .hidden-on-desktop{
+    display: none;
+  }
+
+  .q-drawer,  .fullscreen,  .q-drawer__backdrop {
     display: none;
   }
 
   @media (max-width: 1200px) {
-    .isVisible-Drawer {
+    .hidden-on-desktop {
         display: inherit;
     }
 
-    .tabs_visible {
+    .hidden-on-mobile {
       display: none;
     }
-    
+
+    .q-drawer,  .fullscreen,  .q-drawer__backdrop {
+        display: inherit;
+    }
+
   }
 </style>
