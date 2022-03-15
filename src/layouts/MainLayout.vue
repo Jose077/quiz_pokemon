@@ -120,9 +120,9 @@
     </q-drawer>
 
     <!-- Renderização da pagina -->
-    <q-page-container>
+    <div>
       <router-view />
-    </q-page-container>
+    </div>
 
   </q-layout>
 </template>

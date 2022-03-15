@@ -1,33 +1,33 @@
 <template>
-  <q-page class="content--default">
 
-    <div style="width: 72vw; ">
-
+    <div style="display: flex; justify-content: center">
       <!-- lista de pokedex -->
-      <div class="row q-mt-md">
+      <div class=" q-mt-md" style="max-width: 68rem; ">
         <!-- filtro por nome-->
         <!-- <span class="q-ml-md text-h6">Buscar por nome</span> -->
-        <q-space></q-space>
+        <!-- <q-space/> -->
 
-        <q-input
+        <div
           style="
-            width: 50%;
-            margin: 1rem 1rem;
+            display: flex;
+            justify-content: center;
+            margin: 4.4rem 1rem 0.5rem 1rem;
           "
-          color="blue-grey-6"
-          bg-color="blue-grey-3"
-          filled
-          label="Digite o nome do pokemon!"
-          v-model="text"
-          stack-labe
-          dense
-          clearable
-
         >
-          <template v-slot:append>
-            <q-icon name="search" size="1.8rem" />
-          </template>
-        </q-input>
+          <q-input
+            style="width: 100%"
+            color="blue-10"
+            bg-color="grey-12"
+            outlined
+            label="Digite o nome do pokemon!"
+            v-model="text"
+            clearable
+          >
+            <template v-slot:append>
+              <q-icon name="search" size="1.8rem" />
+            </template>
+          </q-input>
+        </div>
 
         <!-- Lista infinita de pokemons -->
         <q-infinite-scroll @load="onLoad" :offset="250" class="row" >
@@ -51,8 +51,9 @@
 
         </q-infinite-scroll>
       </div>
+
     </div>
-  </q-page>
+
 </template>
 
 <script>

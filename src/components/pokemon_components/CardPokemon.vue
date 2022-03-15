@@ -32,7 +32,7 @@
 
     <!-- Info -->
     <q-item class="q-px-md view_info_props" clickable @click="modalControl = true">
-      <span style="font-size: 0.9rem; font-weight: bold"> Ver informações</span>
+      <span style="font-size: 0.9rem; font-weight: bold"> Ver detalhes</span>
       <q-icon name="mdi-pokeball" size="1.5rem" class="q-ml-xs" />
     </q-item>
 
