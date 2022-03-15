@@ -1,35 +1,56 @@
 <template>
   <q-page class="content--default">
 
-    <div style="width: 72vw; margin-top: 1.5rem">
+    <div style="width: 72vw; ">
 
       <!-- lista de pokedex -->
       <div class="row q-mt-md">
+        <!-- filtro por nome-->
+        <!-- <span class="q-ml-md text-h6">Buscar por nome</span> -->
+        <q-space></q-space>
 
-      <!-- Lista infinita -->
-      <q-infinite-scroll @load="onLoad" :offset="250" class="row" >
-        <div
-          class="col-12 col-lg-3 col-md-3 col-sm-6 q-pa-md"
-          v-for="(pokemon, index) in pokemonList"
-          :key="index"
+        <q-input
+          style="
+            width: 50%;
+            margin: 1rem 1rem;
+          "
+          color="blue-grey-6"
+          bg-color="blue-grey-3"
+          filled
+          label="Digite o nome do pokemon!"
+          v-model="text"
+          stack-labe
+          dense
+          clearable
+
         >
-            <div>
-                <CardPokemon :title="pokemon?.name" :link="pokemon?.url" />
-            </div>
-        </div>
+          <template v-slot:append>
+            <q-icon name="search" size="1.8rem" />
+          </template>
+        </q-input>
 
-
-        <template v-slot:loading>
-          <div style="width: 72vw; display: flex; justify-content: center;" >
-            <q-spacer/>
-            <q-spinner-dots style="color: #0A2C59" size="70px" />
-
+        <!-- Lista infinita de pokemons -->
+        <q-infinite-scroll @load="onLoad" :offset="250" class="row" >
+          <div
+            class="col-12 col-lg-3 col-md-3 col-sm-6 q-pa-md"
+            v-for="(pokemon, index) in pokemonList"
+            :key="index"
+          >
+              <div>
+                  <CardPokemon :title="pokemon?.name" :link="pokemon?.url" />
+              </div>
           </div>
-        </template>
 
-      </q-infinite-scroll>
+          <!-- loading -->
+          <template v-slot:loading>
+            <div style="width: 72vw; display: flex; justify-content: center;" >
+              <q-spacer/>
+              <q-spinner-dots style="color: #0A2C59" size="70px" />
+            </div>
+          </template>
+
+        </q-infinite-scroll>
       </div>
-
     </div>
   </q-page>
 </template>
