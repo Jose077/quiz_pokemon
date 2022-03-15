@@ -1,5 +1,6 @@
 <template>
   <q-card class="bordered" style="border-radius: 1.4rem;">
+    
     <!-- Imagem pokemon-->
     <div
       :style="`
@@ -7,7 +8,23 @@
         justify-content: center;
         background: radial-gradient(white 0%, ${colorsTypes[pokemonData?.types[0].type?.name]} 100%)`"
     >
-      <q-img style="width: 12rem" :src="pokemonData?.sprites?.front_default" :alt="title" />
+
+      <!-- imagem da api -->
+      <q-img
+          v-if="pokemonData?.sprites?.front_default"
+          style="width: 12rem" 
+          :src="pokemonData?.sprites?.front_default"
+          :alt="title" 
+      />
+
+      <!-- caso não tenha imagem -->
+      <q-img
+          v-else
+          style="max-width: 5rem; margin: 3.4rem" 
+          src="~assets/interrogacao_error.png"
+          :alt="title" 
+      />
+
     </div>
 
     <!-- Nome do pokemon -->
@@ -40,7 +57,7 @@
 
   <!-- Modal pokemon info -->
   <q-dialog v-model="modalControl" style="background-color: rgba(0,0,0,0.8);" >
-    <q-card rouded style="width: 900px; max-width: 80vw; border-radius: 1.5rem" >
+    <q-card rouded style="width: 700px; max-width: 80vw; border-radius: 1.5rem" >
       <!-- Tipos/imagem -->
       <div
         :style="`
@@ -76,10 +93,21 @@
 
           <q-space />
 
+ 
+          <!-- imagem da api -->
           <q-img
-            :alt="title"
-            :src="pokemonData?.sprites?.front_default"
-            style="max-width: 12rem"
+              v-if="pokemonData?.sprites?.front_default"
+              style="width: 12rem" 
+              :src="pokemonData?.sprites?.front_default"
+              :alt="title" 
+          />
+
+          <!-- caso não tenha imagem -->
+          <q-img
+              v-else
+              style="max-width: 5rem; margin: 3.4rem" 
+              src="~assets/interrogacao_error.png"
+              :alt="title" 
           />
 
       </div>

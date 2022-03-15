@@ -4,9 +4,6 @@
       <!-- lista de pokedex -->
       <div class=" q-mt-md" style="max-width: 68rem; ">
         <!-- filtro por nome-->
-        <!-- <span class="q-ml-md text-h6">Buscar por nome</span> -->
-        <!-- <q-space/> -->
-
         <div
           style="
             display: flex;
@@ -19,18 +16,27 @@
             color="blue-10"
             bg-color="grey-12"
             outlined
-            label="Digite o nome do pokemon!"
-            v-model="text"
-            clearable
+            placeholder="Digite o nome do pokémon!"
+            v-model="namePokemonVModel"
+            
           >
             <template v-slot:append>
-              <q-icon name="search" size="1.8rem" />
+              <q-icon 
+                name="search" 
+                size="1.8rem"
+              />
             </template>
+            
           </q-input>
         </div>
 
         <!-- Lista infinita de pokemons -->
-        <q-infinite-scroll @load="onLoad" :offset="250" class="row" >
+        <q-infinite-scroll 
+          @load="onLoad" 
+          :offset="250" 
+          class="row"
+          :key="keyList"
+        >
           <div
             class="col-12 col-lg-3 col-md-3 col-sm-6 q-pa-md"
             v-for="(pokemon, index) in pokemonList"
@@ -44,7 +50,6 @@
           <!-- loading -->
           <template v-slot:loading>
             <div style="width: 72vw; display: flex; justify-content: center;" >
-              <q-spacer/>
               <q-spinner-dots style="color: #0A2C59" size="70px" />
             </div>
           </template>
@@ -73,17 +78,39 @@ export default defineComponent({
   },
 
   setup() {
-
     const $store = useStore();
     const pokemonList = ref([])
+    const allPokemonsList = ref([])
 
     return {
       $store,
       pokemonList,
+      allPokemonsList,
+      namePokemonVModel: ref(''),
+      timeFilterByName: ref(null),
+      keyList: ref(0)
     };
   },
 
   methods: {
+
+    filterPokemonByName(name) {
+        if(name?.trim()){
+          const allPokemons = this.allPokemonsList.results;
+
+          this.pokemonList = allPokemons.filter((pokemon) => pokemon?.name?.includes(name));
+
+          this.keyList++;
+
+        } else {
+
+          this.pokemonList = [];
+
+          this.keyList++;
+        }
+    },
+
+    // Funções de comunicação com a API
 
     getPokemons(props) {
       const params = {
@@ -117,15 +144,39 @@ export default defineComponent({
 
       done()
 
-    }
+    },
 
+    getPokemonsForFilter(props) {
+      const params = {
+        limit: 9999,
+      }
+
+      return this.$store.dispatch("pokemon/getPokemons", params)?.then((res) => {
+          return res.data ?? [];
+      })
+      .catch((err) => {
+          console.log(err);
+      });
+    },
 
   },
 
-  created() {
-    // this.getPokemons();
-    // this.onLoad()
+  watch: {
+      namePokemonVModel: function(val) {
+        // debouce
+        clearTimeout(this.timeFilterByName);
+
+        this.timeFilterByName = setTimeout(() => {
+            this.filterPokemonByName(val)
+        }, 500)
+
+      }
   },
+
+  async created() {
+    this.allPokemonsList = await this.getPokemonsForFilter()
+  },
+
 });
 </script>
 
