@@ -1,4 +1,4 @@
-import { api } from '../../boot/axios.ts'
+import { api } from '../../boot/axios.js'
 
 export async function getPokemons({ state }, params) {
     return new Promise((resolve, reject) => {

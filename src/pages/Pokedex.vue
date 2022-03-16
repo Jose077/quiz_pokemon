@@ -3,6 +3,7 @@
     <div style="display: flex; justify-content: center">
       <!-- lista de pokedex -->
       <div class=" q-mt-md" style="max-width: 68rem; ">
+        
         <!-- filtro por nome-->
         <div
           style="
@@ -18,7 +19,6 @@
             outlined
             placeholder="Digite o nome do pokémon!"
             v-model="namePokemonVModel"
-            
           >
             <template v-slot:append>
               <q-icon 

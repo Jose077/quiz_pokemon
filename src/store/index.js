@@ -2,7 +2,7 @@ import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
 import pokemon from './pokemon'
 // import axios from 'axios';
-import { api } from '../boot/axios.ts'
+import { api } from '../boot/axios.js'
 
 
 export default store(function (/* { ssrContext } */) {
