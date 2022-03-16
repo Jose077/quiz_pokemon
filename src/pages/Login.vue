@@ -1,21 +1,44 @@
 <template>
-    <q-page>
-        <div style="display: flex; justify-content: center; ">
-          <div style="margin-top: 20rem">
-            <q-btn
-              color="red" 
-              icon="mdi-google" label="Login with google"
-              size="md" @click="logIn('google')" >
-            </q-btn>
+    <q-page class="content-general-props">
 
-            <q-btn
-              color="black" 
-              icon="mdi-google" label="LogOut"
-              size="md" @click="logOut('google')" >
-            </q-btn>
+
+          <div class="row">
+
+  
+
+            <!-- imagem -->
+            <div class="col col-md-8 backgrond-props" style="height: 100vh; display: flex; justify-content: center; align-items: center">
+                  <div style="
+                    margin: auto;
+                    position: absolute; 
+                    opacity: 1; 
+                    z-index: 99;
+                  ">
+                  
+                  <q-img 
+                    src="~assets/poke_logo.svg" 
+                    width="300px"
+                  />
+            </div> 
+            </div>
+
+            <div class="col col-md-4" style="display: flex; justify-content: center; align-items: center">
+                <q-btn
+                  color="red" 
+                  icon="mdi-google" 
+                  @click="logIn('google')"
+                  >
+                    Login with google
+                </q-btn>
+            </div>
           </div>
-       </div>
     </q-page>
+
+    <!-- <q-btn
+      color="black" 
+      icon="mdi-google" label="LogOut"
+      size="md" @click="logOut('google')" >
+    </q-btn> -->
 </template>
 
 <script>
@@ -54,8 +77,17 @@ export default {
 }
 </script>
 
-<style scoped>
-.dark{
-  background: #1817309a;
-}
+<style scoped lang="scss">
+  .backgrond-props{
+    background: url("https://wallpaperaccess.com/full/7941327.jpg") ;
+    opacity: 0.5;
+  
+  }
+
+  .content-general-props {
+    background: $blue_400;
+    
+  }
+
+
 </style>
