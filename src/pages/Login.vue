@@ -1,41 +1,52 @@
 <template>
-    <q-page class="content-general-props">
+    <q-page class=" backgrond-props">
+        <div  style="display: flex; justify-content: center; align-items: center">
 
+          <q-card bordered class="card_login_props">
+            <q-card-section style="display: flex; gap: 0.5rem; flex-direction: column; justify-content: center">
 
-          <div class="row">
-
-  
-
-            <!-- imagem -->
-            <div class="col col-md-8 backgrond-props" style="height: 100vh; display: flex; justify-content: center; align-items: center">
-                  <div style="
-                    margin: auto;
-                    position: absolute; 
-                    opacity: 1; 
-                    z-index: 99;
-                  ">
-                  
-                  <q-img 
-                    src="~assets/poke_logo.svg" 
-                    width="300px"
+              <!-- imagem pokedex -->
+              <div style="display: flex; justify-content: center">
+                  <q-img
+                      width="200px"
+                      src="https://raw.githubusercontent.com/sleduardo20/pokedex/0671af442dff1d8f7141e49eb83b438885bbc9e9/public/img/logo.svg"
                   />
-            </div> 
-            </div>
+              </div>
 
-            <div class="col col-md-4" style="display: flex; justify-content: center; align-items: center">
-                <q-btn
-                  color="red" 
-                  icon="mdi-google" 
-                  @click="logIn('google')"
+              <br>
+                  <b> <span class="text-white text-h6">Faça login utilizando uma das redes socias abaixo!</span> </b>
+              <br>
+
+              <!-- botoes login -->
+              <div style="display: flex; flex-direction: column; gap: 1rem">
+
+                  <!-- login com o google -->
+                  <q-btn
+                      color="red"
+                      icon="mdi-google"
+                      @click="logIn('google')"
                   >
-                    Login with google
-                </q-btn>
-            </div>
-          </div>
+                        Login with google
+                  </q-btn>
+
+                  <!-- login com o facebook -->
+                  <q-btn
+                      color="blue"
+                      icon="mdi-facebook"
+                      @click="logIn('google')"
+                  >
+                        Login with Facebook
+                  </q-btn>
+              </div>
+
+            </q-card-section>
+
+          </q-card>
+        </div>
     </q-page>
 
     <!-- <q-btn
-      color="black" 
+      color="black"
       icon="mdi-google" label="LogOut"
       size="md" @click="logOut('google')" >
     </q-btn> -->
@@ -45,7 +56,7 @@
 import { ref } from '@vue/reactivity'
 export default {
   name: 'Login',
-  
+
   setup(){
 
     const user =  ref(null);
@@ -78,16 +89,37 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
   .backgrond-props{
-    background: url("https://wallpaperaccess.com/full/7941327.jpg") ;
-    opacity: 0.5;
-  
+    background: url("https://wallpaperaccess.com/full/7941327.jpg"), rgba(6, 1, 48, 0.8);
+    background-size: cover;
+    background-blend-mode: color !important;
+
+    display: flex;
+    justify-content: center;
+
   }
 
-  .content-general-props {
+  .card_login_props{
+    opacity: 0.9;
+
+    display: flex;
+    justify-content: center;
+    align-content: space-around;
+
+    height: 70%;
+    width:  95%;
+
+    max-height: 30rem;
+    max-width: 25rem;
+
     background: $blue_400;
-    
+    padding: 1.5rem;
+    border-radius: 20px;
+
   }
+
+
 
 
 </style>
