@@ -184,10 +184,6 @@ export default defineComponent({
       tab: ref("pokedex"),
     };
   },
-
-  created(){
-    console.log(this.store?.state, "storeeeeeeeeeeeeeee");
-  }
 });
 </script>
 

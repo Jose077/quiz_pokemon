@@ -1,9 +1,6 @@
 import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
 import pokemon from './pokemon'
-// import axios from 'axios';
-import { api } from '../boot/axios.js'
-
 
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
@@ -14,13 +11,19 @@ export default store(function (/* { ssrContext } */) {
     },
 
     mutations: {
-      SET_USER(ctx, user){
-        ctx.state.user = user
+      SET_USER(ctx, user) {
+        ctx.user = user
+      },
+
+      SUM_COUNT(ctx, newValue) {
+        ctx.teste_number = (ctx.teste_number + newValue)
       }
     },
 
     actions: {
+      isLogged() {
 
+      }
     },
 
     modules: {

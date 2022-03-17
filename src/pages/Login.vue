@@ -80,8 +80,8 @@ export default {
       this.$hello(network).login().then(() => {
           this.$hello(network).api("me")
           .then((res) => {
-              this.user = res;
-              this.$store.commit("SET_USER", res);
+
+              console.log("inicio console!!");
 
               this.$q.notify({
                 message: "Login efetuado com sucesso!",
@@ -90,7 +90,15 @@ export default {
                 timeout: 1000
               })
 
+              this.user = res;
+
+              this.$store.commit("SET_USER", res);
+
+
               this.$router.push("/pokedex");
+   
+
+              console.log("final console!!!");
           })
           .catch((err) => {
               this.$q.notify({
@@ -115,7 +123,7 @@ export default {
     },
   },
   created(){
-    console.log("user aqui: ",);
+    // console.log("user aqui: ",);
   }
 }
 </script>
