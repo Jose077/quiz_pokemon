@@ -16,13 +16,13 @@
           >
             <div @click="$router.push('/')" style="cursor: pointer">
               <img
-                alt="Quasar logo"
+                alt="Logo"
                 src="~assets/certo_errado.png"
                 style="height: 40px"
               />
 
               <img
-                alt="Quasar logo"
+                alt="Logo"
                 src="~assets/poke_logo.svg"
                 style="height: 40px"
               />
@@ -57,6 +57,8 @@
               </q-avatar>
 
               <b> John Doe </b>
+
+              <pre>{{user}}</pre> eeeeeeeeeeeee
             </q-chip>
 
             <q-btn
@@ -130,8 +132,7 @@
 <script>
 
 import { defineComponent, ref } from "vue";
-import { useRouter } from "vue-router";
-
+import { useStore } from "vuex";
 const menuList = [
   {
     icon: 'mdi-pokeball',
@@ -166,13 +167,15 @@ export default defineComponent({
   },
 
   setup() {
-    const $router = useRouter();
     const leftDrawerOpen = ref(false);
+    const store = useStore();
 
     return {
-      menuList,
       leftDrawerOpen,
       drawerLeft: ref(false),
+      user: ref(store.state.user),
+      store,
+      menuList,
 
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -181,6 +184,10 @@ export default defineComponent({
       tab: ref("pokedex"),
     };
   },
+
+  created(){
+    console.log(this.store?.state, "storeeeeeeeeeeeeeee");
+  }
 });
 </script>
 

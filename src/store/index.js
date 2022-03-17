@@ -9,7 +9,14 @@ export default store(function (/* { ssrContext } */) {
   const Store = createStore({
 
     state: {
-      teste_number: 0
+      teste_number: 0,
+      user: {}
+    },
+
+    mutations: {
+      SET_USER(ctx, user){
+        ctx.state.user = user
+      }
     },
 
     actions: {

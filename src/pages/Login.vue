@@ -14,7 +14,7 @@
               </div>
 
               <br>
-                  <b> <span class="text-white text-h6">Faça login utilizando uma das redes socias abaixo!</span> </b>
+                  <b> <span class="text-white text-h6">Faça login utilizando uma das formas abaixo!</span> </b>
               <br>
 
               <!-- botoes login -->
@@ -25,18 +25,17 @@
                       color="red"
                       icon="mdi-google"
                       @click="logIn('google')"
-                  >
-                        Login with google
-                  </q-btn>
+                      label="Login with google"
+                  />
 
                   <!-- login com o facebook -->
                   <q-btn
                       color="blue"
                       icon="mdi-facebook"
                       @click="logIn('google')"
-                  >
-                        Login with Facebook
-                  </q-btn>
+                      label="Login with Facebook"
+                  />
+
               </div>
 
             </q-card-section>
@@ -45,33 +44,63 @@
         </div>
     </q-page>
 
-    <!-- <q-btn
-      color="black"
-      icon="mdi-google" label="LogOut"
-      size="md" @click="logOut('google')" >
-    </q-btn> -->
 </template>
 
 <script>
-import { ref } from '@vue/reactivity'
+import { ref } from '@vue/reactivity';
+import { useQuasar } from 'quasar';
+
+// import { Notify, useQuasar } from 'quasar'
+
+// Notify.create({
+//   message: 'Danger, Will Robinson! Danger!'
+// })
+
+
 export default {
   name: 'Login',
 
   setup(){
 
+    const $q = useQuasar();
+
     const user =  ref(null);
 
     return {
-      user
+      user,
+      $q
     }
 
   },
+
   methods: {
+
     // login
     logIn (network) {
       this.$hello(network).login().then(() => {
-          const data = this.$hello(network).api("me").then((res) => {
+          this.$hello(network).api("me")
+          .then((res) => {
               this.user = res;
+              this.$store.commit("SET_USER", res);
+
+              this.$q.notify({
+                message: "Login efetuado com sucesso!",
+                position: "top-right",
+                type: 'positive',
+                timeout: 1000
+              })
+
+              this.$router.push("/pokedex");
+          })
+          .catch((err) => {
+              this.$q.notify({
+                message: "Erro ao efetuar login!",
+                position: "top-right",
+                type: 'negative',
+                timeout: 1000
+              })
+
+            console.log(err)
           })
       })
     },
@@ -83,7 +112,10 @@ export default {
         }).catch((err) => {
           console.log("Ocorreu um erro:", err);
         })
-    }
+    },
+  },
+  created(){
+    console.log("user aqui: ",);
   }
 }
 </script>
@@ -101,7 +133,7 @@ export default {
   }
 
   .card_login_props{
-    opacity: 0.9;
+    opacity: 1;
 
     display: flex;
     justify-content: center;
