@@ -136,9 +136,6 @@ export default defineComponent({
 
       const pokemons = await this.getPokemons(props);
 
-      console.log(index)
-
-
       this.pokemonList.push(...pokemons?.results)
 
       done()
@@ -174,9 +171,8 @@ export default defineComponent({
 
   async created() {
     this.allPokemonsList = await this.getPokemonsForFilter();
-
-    // console.log("user pokemon", this.$store.state)
   },
+
 
 });
 </script>

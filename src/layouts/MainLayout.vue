@@ -53,12 +53,11 @@
         <div class="hidden-on-mobile">
             <q-chip outline class=" text-white" style="height: 2rem">
               <q-avatar size="40px" style="border: 1px solid white">
-                <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+                <img :src="store?.getters?.getUser?.picture" />
               </q-avatar>
 
-              <b> John Doe </b>
+              <b> {{store?.getters?.getUser?.name}}  </b>
 
-              <pre>{{user}}</pre> eeeeeeeeeeeee
             </q-chip>
 
             <q-btn
@@ -66,9 +65,9 @@
               outline
               icon-right="mdi-exit-to-app"
               class="q-mr-xl q-ml-xs"
-              style="padding: 0px 10px; "
+              style="padding: 0px 1rem; font-size: 12px "
             >
-              logout
+             logout 
             </q-btn>
         </div>
 
@@ -111,10 +110,9 @@
             <q-img class="absolute-top" src="https://lh3.googleusercontent.com/tlIBC-OoNcTiL7SXVcrCIG91xE_XVFzYyRKLouFq5NV7LYOznYyXI7ualBMV15H9L1eGWVGz5Co1GXqqgJYDZ-5sDY7QzPPeTID975gJ3PIpNMc=e365-w1259" style="height: 150px">
                 <div class="absolute-bottom bg-transparent">
                   <q-avatar size="56px" class="q-mb-sm">
-                    <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                    <img :src="store?.getters?.getUser?.picture">
                   </q-avatar>
-                  <div class="text-weight-bold">John Doe</div>
-                  <div>@jhonDoe</div>
+                  <div class="text-weight-bold">{{store?.getters?.getUser?.name}}</div>
                 </div>
             </q-img>
       </div>
@@ -173,7 +171,6 @@ export default defineComponent({
     return {
       leftDrawerOpen,
       drawerLeft: ref(false),
-      user: ref(store.state.user),
       store,
       menuList,
 
@@ -184,6 +181,8 @@ export default defineComponent({
       tab: ref("pokedex"),
     };
   },
+
+
 });
 </script>
 

@@ -7,8 +7,6 @@ import {
 } from "vue-router";
 import routes from "./routes";
 
-import Store from "../store"
-
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -18,7 +16,8 @@ import Store from "../store"
  * with the Router instance.
  */
 
-export default route(function (/* { store, ssrContext } */) {
+export default route(function ({ store }) {
+
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
@@ -39,8 +38,6 @@ export default route(function (/* { store, ssrContext } */) {
 
 
   Router.beforeEach(async (to, from) => {
-
-    const store = Store();
 
     // Verifica usuario logado
     let isLogged = store?.getters?.isLoggedIn;

@@ -1,7 +1,6 @@
 import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
 import pokemon from './pokemon'
-// import hello from '../boot/hello'
 import hello from 'hellojs';
 
 
@@ -14,16 +13,6 @@ export default store(function () {
       token: ''
     },
 
-    mutations: {
-      SET_USER(ctx, user) {
-        ctx.user = user
-      },
-
-      SUM_COUNT(ctx, newValue) {
-        ctx.teste_number = (ctx.teste_number + newValue)
-      }
-    },
-
     getters: {
       isLoggedIn: state => {
         var online = function (session) {
@@ -34,11 +23,14 @@ export default store(function () {
         var go = hello('google')?.getAuthResponse();
 
         return online(go);
+      },
+
+      getUser: state => {
+        return state.user
       }
     },
 
     actions: {
-
       async getUser(ctx, network) {
         await hello(network)?.api('me')
           .then((user) => {
@@ -47,12 +39,20 @@ export default store(function () {
 
             return user
           }, (err) => {
-            console.log("Erro Aqui EEEEEE: ", err)
+            console.log("Erro Aqui: ", err)
           })
       },
     },
 
+    mutations: {
+      SET_USER(ctx, user) {
+        ctx.user = user
+      },
 
+      SUM_COUNT(ctx, newValue) {
+        ctx.teste_number = (ctx.teste_number + newValue)
+      }
+    },
 
     modules: {
       pokemon
