@@ -1,13 +1,17 @@
 import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
 import pokemon from './pokemon'
+// import hello from '../boot/hello'
+import hello from 'hellojs';
 
-export default store(function (/* { ssrContext } */) {
+
+export default store(function () {
   const Store = createStore({
 
     state: {
       teste_number: 0,
-      user: {}
+      user: {},
+      token: ''
     },
 
     mutations: {
@@ -20,11 +24,35 @@ export default store(function (/* { ssrContext } */) {
       }
     },
 
-    actions: {
-      isLogged() {
+    getters: {
+      isLoggedIn: state => {
+        var online = function (session) {
+          var currentTime = (new Date()).getTime() / 1000;
+          return session && session?.access_token && session?.expires > currentTime;
+        };
 
+        var go = hello('google')?.getAuthResponse();
+
+        return online(go);
       }
     },
+
+    actions: {
+
+      async getUser(ctx, network) {
+        await hello(network)?.api('me')
+          .then((user) => {
+
+            ctx.commit('SET_USER', user);
+
+            return user
+          }, (err) => {
+            console.log("Erro Aqui EEEEEE: ", err)
+          })
+      },
+    },
+
+
 
     modules: {
       pokemon

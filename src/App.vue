@@ -8,7 +8,6 @@ export default defineComponent({
   name: "App",
 
   setup() {
-    console.log("principal EEEEEEEEEEEEE!!")
   }
 });
 </script>

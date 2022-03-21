@@ -81,8 +81,6 @@ export default {
           this.$hello(network).api("me")
           .then((res) => {
 
-              console.log("inicio console!!");
-
               this.$q.notify({
                 message: "Login efetuado com sucesso!",
                 position: "top-right",
@@ -96,9 +94,7 @@ export default {
 
 
               this.$router.push("/pokedex");
-   
 
-              console.log("final console!!!");
           })
           .catch((err) => {
               this.$q.notify({
@@ -121,10 +117,12 @@ export default {
           console.log("Ocorreu um erro:", err);
         })
     },
+
+    // getUser() {
+    //   this.$store.dispatch("getUser", 'google');
+    // }
   },
-  created(){
-    // console.log("user aqui: ",);
-  }
+
 }
 </script>
 

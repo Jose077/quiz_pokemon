@@ -29,17 +29,6 @@
             
           </q-input>
         </div>
-
-        <div class="q-ml-xl">
-                 {{$store.state.teste_number}}
-
-                 {{$store.state.user}}
-
-                 <br>
-
-                <q-btn @click="$store.commit('SET_USER', {nome: 'ontonhe', idade: 2})"> Arrea </q-btn>
-
-        </div>
  
         <!-- Lista infinita de pokemons -->
         <q-infinite-scroll 
@@ -186,7 +175,7 @@ export default defineComponent({
   async created() {
     this.allPokemonsList = await this.getPokemonsForFilter();
 
-    console.log("user pokemon", this.$store.state)
+    // console.log("user pokemon", this.$store.state)
   },
 
 });

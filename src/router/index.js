@@ -7,6 +7,8 @@ import {
 } from "vue-router";
 import routes from "./routes";
 
+import Store from "../store"
+
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -20,8 +22,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-    ? createWebHistory
-    : createWebHashHistory;
+      ? createWebHistory
+      : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -34,6 +36,34 @@ export default route(function (/* { store, ssrContext } */) {
       process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE
     ),
   });
+
+
+  Router.beforeEach(async (to, from) => {
+
+    const store = Store();
+
+    // Verifica usuario logado
+    let isLogged = store?.getters?.isLoggedIn;
+
+    if (isLogged && to.path == '/') return { path: from.path, }
+
+    if (to.meta.requiresAuth && !isLogged) {
+      return {
+        path: '/',
+      }
+    }
+
+    // veriica informacoes de usuario
+    let user = store?.state?.user;
+
+    // Busca informações do usuario
+    let userExists = Object.keys(user).length > 0;
+
+    if (!userExists) {
+      await store.dispatch("getUser", 'google');
+    }
+
+  })
 
   return Router;
 });
