@@ -3,6 +3,7 @@
         <div  style="display: flex; justify-content: center; align-items: center">
 
           <q-card bordered class="card_login_props">
+
             <q-card-section style="display: flex; gap: 0.5rem; flex-direction: column; justify-content: center">
 
               <!-- imagem pokedex -->
@@ -14,8 +15,12 @@
               </div>
 
               <br>
-                  <b> <span class="text-white text-h6">Faça login utilizando uma das formas abaixo!</span> </b>
-              <br>
+              
+              <b class="q-mb-sm"> 
+                  <span class="text-white text-h6">
+                      Faça login utilizando uma das formas abaixo!
+                  </span> 
+              </b>
 
               <!-- botoes login -->
               <div style="display: flex; flex-direction: column; gap: 1rem">
@@ -29,12 +34,12 @@
                   />
 
                   <!-- login com o facebook -->
-                  <q-btn
+                  <!-- <q-btn
                       color="blue"
                       icon="mdi-facebook"
                       @click="logIn('google')"
-                      label="Login with Facebook"
-                  />
+                      label="Sobre"
+                  /> -->
 
               </div>
 
@@ -49,13 +54,6 @@
 <script>
 import { ref } from '@vue/reactivity';
 import { useQuasar } from 'quasar';
-import { useStore } from 'vuex';
-
-// import { Notify, useQuasar } from 'quasar'
-
-// Notify.create({
-//   message: 'Danger, Will Robinson! Danger!'
-// })
 
 
 export default {
