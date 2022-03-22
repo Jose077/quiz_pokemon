@@ -39,13 +39,13 @@
             icon="mdi-pokeball"
             label="Pokedex"
           />
-          <q-route-tab
+          <!-- <q-route-tab
             exact
             to="/quizz"
             name="quizz"
             icon="mdi-comment-question-outline"
             label="Quizz"
-          />
+          /> -->
           <!-- <q-tab name="movies" icon="movie" label="Movies" /> -->
         </q-tabs>
 
@@ -147,13 +147,6 @@ const menuList = [
     label: 'Pokédex',
     separator: true,
     router: 'pokedex'
-  },
-  {
-    icon: 'mdi-comment-question-outline',
-    label: 'Quizz',
-    separator: true,
-    router: 'quizz'
-
   },
 
 ]
