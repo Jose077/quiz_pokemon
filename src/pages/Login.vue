@@ -49,6 +49,7 @@
 <script>
 import { ref } from '@vue/reactivity';
 import { useQuasar } from 'quasar';
+import { useStore } from 'vuex';
 
 // import { Notify, useQuasar } from 'quasar'
 
@@ -63,12 +64,11 @@ export default {
   setup(){
 
     const $q = useQuasar();
-
     const user =  ref(null);
 
     return {
       user,
-      $q
+      $q,
     }
 
   },
@@ -82,10 +82,10 @@ export default {
           .then((res) => {
 
               this.$q.notify({
-                message: "Login efetuado com sucesso!",
+                message: `Seja Bem-vindo, ${this.$store?.getters?.getUser?.name}!`,
                 position: "top-right",
                 type: 'positive',
-                timeout: 1000
+                timeout: 2000
               })
 
               this.user = res;
@@ -109,18 +109,7 @@ export default {
       })
     },
 
-    // logOut
-    logOut(network) {
-        this.$hello(network).logout().then(() => {
-            console.log("logout realizado com sucesso!");
-        }).catch((err) => {
-          console.log("Ocorreu um erro:", err);
-        })
-    },
 
-    // getUser() {
-    //   this.$store.dispatch("getUser", 'google');
-    // }
   },
 
 }

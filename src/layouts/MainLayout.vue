@@ -50,25 +50,24 @@
         </q-tabs>
 
         <!-- informacoes de usuario -->
-        <div class="hidden-on-mobile">
-            <q-chip outline class=" text-white" style="height: 2rem">
-              <q-avatar size="40px" style="border: 1px solid white">
+        <div class="hidden-on-mobile" style="display: flex; gap: 0.6rem; margin: 0px 2rem; align-items: center">
+            <div outline class=" text-white" style="height: 2rem; display: flex; align-items: center">
+              <b class="q-mr-sm"> {{store?.getters?.getUser?.name}}  </b>
+
+              <q-avatar size="35px" >
                 <img :src="store?.getters?.getUser?.picture" />
               </q-avatar>
+            </div>
 
-              <b> {{store?.getters?.getUser?.name}}  </b>
+            <span style="font-size: 1.3rem"> | </span>
 
-            </q-chip>
-
-            <q-btn
-              rounded
-              outline
-              icon-right="mdi-exit-to-app"
-              class="q-mr-xl q-ml-xs"
-              style="padding: 0px 1rem; font-size: 12px "
-            >
-             logout 
-            </q-btn>
+            <q-icon
+              style="cursor: pointer"
+              @click="logOut('google')"
+              size="1.7rem"
+              name="mdi-exit-to-app"
+              class="ml-xl"
+            />
         </div>
 
       </q-toolbar>
@@ -105,6 +104,16 @@
                 <q-separator :key="'sep' + index"  v-if="menuItem.separator" />
 
               </template>
+
+                <q-item clickable @click="logOut('google')">
+                  <q-item-section >
+                    <q-icon size="1.8rem" name="mdi-exit-to-app" />
+                  </q-item-section>
+
+                  <q-item-section>
+                    <b style="font-size: 1rem; padding-right: 0px; margin-right: 0px"  > Sair </b>
+                  </q-item-section>
+                </q-item>
             </q-list>
 
             <q-img class="absolute-top" src="https://lh3.googleusercontent.com/tlIBC-OoNcTiL7SXVcrCIG91xE_XVFzYyRKLouFq5NV7LYOznYyXI7ualBMV15H9L1eGWVGz5Co1GXqqgJYDZ-5sDY7QzPPeTID975gJ3PIpNMc=e365-w1259" style="height: 150px">
@@ -129,6 +138,7 @@
 
 <script>
 
+import { useQuasar } from "quasar";
 import { defineComponent, ref } from "vue";
 import { useStore } from "vuex";
 const menuList = [
@@ -146,15 +156,6 @@ const menuList = [
 
   },
 
-  {
-    icon: 'mdi-exit-to-app',
-    label: 'Sair',
-    separator: false,
-    router: '/'
-
-  }
-
-
 ]
 
 export default defineComponent({
@@ -167,13 +168,15 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
     const store = useStore();
+    const $q = useQuasar();
+
 
     return {
       leftDrawerOpen,
       drawerLeft: ref(false),
       store,
       menuList,
-
+      $q,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
@@ -181,6 +184,24 @@ export default defineComponent({
       tab: ref("pokedex"),
     };
   },
+
+  methods: {
+
+    // logOut
+    logOut(network) {
+        this.$hello(network).logout().then(() => {
+              this.$q.notify({
+                message: `Até logo, ${this.store?.getters?.getUser?.name}!`,
+                position: "top-right",
+                type: 'info',
+                timeout: 2000
+              })
+            // redirect
+            this.$router.push('/')
+        })
+    },
+
+  }
 
 
 });
