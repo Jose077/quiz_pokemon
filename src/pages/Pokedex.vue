@@ -17,11 +17,13 @@
             color="blue-10"
             bg-color="grey-12"
             outlined
+            clearable
             placeholder="Digite o nome do pokémon!"
             v-model="namePokemonVModel"
           >
-            <template v-slot:append>
-              <q-icon 
+            <template v-slot:append v-if="!namePokemonVModel">
+              <q-icon
+                
                 name="search" 
                 size="1.8rem"
               />
