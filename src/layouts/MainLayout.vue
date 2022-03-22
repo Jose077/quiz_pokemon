@@ -233,7 +233,7 @@ export default defineComponent({
     }
 
     .hidden-on-mobile {
-      display: none;
+      display: none !important;
     }
 
     .q-drawer,  .fullscreen,  .q-drawer__backdrop {

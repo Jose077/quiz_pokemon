@@ -56,8 +56,8 @@
   </q-card>
 
   <!-- Modal pokemon info -->
-  <q-dialog v-model="modalControl" style="background-color: rgba(0,0,0,0.8);" >
-    <q-card rouded style="width: 700px; max-width: 80vw; border-radius: 1.5rem" >
+  <q-dialog v-model="modalControl"  >
+    <q-card rouded style="width: 700px; max-width: 80vw; border-radius: 1.5rem; overflow-y: auto" >
       <!-- Tipos/imagem -->
       <div
         :style="`
@@ -67,7 +67,6 @@
             background: linear-gradient(to right, white 0%, ${colorsTypes[pokemonData?.types[0].type?.name]} 100%)
         `"
       >
-
           <!-- types -->
           <q-btn
             flat
